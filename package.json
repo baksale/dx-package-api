@@ -22,7 +22,13 @@
     "type": "git",
     "url": "git+https://github.com/baksale/dx-package-api.git"
   },
-  "keywords": ["DX", "SFDX", "Package", "API", "Salesforce"],
+  "keywords": [
+    "DX",
+    "SFDX",
+    "Package",
+    "API",
+    "Salesforce"
+  ],
   "author": "baksale",
   "license": "MIT",
   "bugs": {
@@ -30,6 +36,8 @@
   },
   "homepage": "https://github.com/baksale/dx-package-api#readme",
   "devDependencies": {
+    "@salesforce/core": "^2.2.0",
+    "@salesforce/dev-config": "^1.5.0",
     "@types/jest": "^25.1.2",
     "jest": "^25.1.0",
     "prettier": "^1.19.1",

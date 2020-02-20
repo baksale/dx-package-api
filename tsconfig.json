@@ -1,11 +1,5 @@
 {
-  "compilerOptions": {
-    "target": "ES2019",
-    "module": "commonjs",
-    "declaration": true,
-    "outDir": "./lib",
-    "strict": true
-  },
+  "extends": "./node_modules/@salesforce/dev-config/tsconfig",
   "include": ["src/main"],
   "exclude": ["node_modules", "src/test/*"]
 }
