@@ -1,7 +1,7 @@
 {
   "name": "dx-package-api",
   "version": "1.0.0",
-  "description": "API to work with salesforce dx packages",
+  "description": "API to work with salesforce dx packages metadata",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
@@ -22,7 +22,7 @@
     "type": "git",
     "url": "git+https://github.com/baksale/dx-package-api.git"
   },
-  "keywords": ["DX", "SFDX", "Package", "API"],
+  "keywords": ["DX", "SFDX", "Package", "API", "Salesforce"],
   "author": "baksale",
   "license": "MIT",
   "bugs": {
