@@ -1,4 +1,4 @@
-import { Package2Version } from './model';
+import { Package2Version } from '.';
 
 export interface DxPackageMetadataApi {
   getMaxBuildNumber(
