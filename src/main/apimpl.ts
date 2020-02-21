@@ -1,7 +1,7 @@
 import { AnyJson } from '@salesforce/ts-types';
 import { Connection } from '@salesforce/core';
 import { DxPackageMetadataApi } from './api';
-import { Package2Version } from "./model";
+import { Package2Version, SubscriberPackageVersion } from "./model";
 
 export class DxPackageMetadataApiImpl implements DxPackageMetadataApi {
   constructor(private connection: Connection) {};
@@ -17,7 +17,7 @@ export class DxPackageMetadataApiImpl implements DxPackageMetadataApi {
   private PACKAGE_VERSION_WHERE_BY_VERSION = ' WHERE Package2Id=\'%i\' AND MajorVersion=%m AND MinorVersion=%n'
   + ' AND PatchVersion=%p AND BuildNumber=%b';
 
-  private PACKAGE_VERSION_DEPENDENCIES_QUERY = 'SELECT Dependencies FROM SubscriberPackageVersion';
+  private PACKAGE_VERSION_DEPENDENCIES_QUERY = 'SELECT Dependencies FROM SubscriberPackageVersion WHERE Id = \'%s\'';
 
   private MAX_BUILD_NUMBER_QUERY = 'SELECT max(buildNumber) latestBuildNumber FROM Package2Version'
   + ' WHERE Package2Id=\'%i\' AND MajorVersion=%m AND MinorVersion=%n AND PatchVersion=%p';
@@ -52,13 +52,51 @@ export class DxPackageMetadataApiImpl implements DxPackageMetadataApi {
         });
     return result;
   }
-  getPackage2VersionByVersion(package2Id: string, majorVersion: string, minorVersion: string, patchVersion: string, buildNumber: string): Promise<Package2Version> {
-    throw new Error("Method not implemented.");
+  public async getPackage2VersionByVersion(package2Id: string, majorVersion: string, minorVersion: string, patchVersion: string, buildNumber: string): Promise<Package2Version> {
+    const query: string = (this.PACKAGE_VERSION_QUERY + this.PACKAGE_VERSION_WHERE_BY_VERSION)
+      .replace('%i', package2Id)
+      .replace('%m', majorVersion)
+      .replace('%n', minorVersion)
+      .replace('%p', patchVersion)
+      .replace('%b', buildNumber);
+      let result: Package2Version = null;
+      await this.connection.tooling.query<Package2Version>(query)
+          .then(packageQueryResult => {
+              packageQueryResult.records.forEach(packageVersion => {
+                  result = packageVersion;
+                  return true;
+              });
+          });
+      return result;
   }
-  getPackage2VersionByIds(subscriberPackageVersionIds: string[]): Promise<Package2Version[]> {
-    throw new Error("Method not implemented.");
+  public async getPackage2VersionByIds(subscriberPackageVersionIds: string[]): Promise<Package2Version[]> {
+    const result: Package2Version[] = [];
+    if (subscriberPackageVersionIds.length === 0) return result;
+    const packageWhereClause = this.PACKAGE_VERSION_WHERE_BY_VERSION
+      .replace('%s', subscriberPackageVersionIds.join(','));
+    const query = this.PACKAGE_VERSION_QUERY + packageWhereClause;
+    await this.connection.tooling.query<Package2Version>(query)
+        .then(packageQueryResult => {
+            packageQueryResult.records.forEach(packageVersion => {
+                result.push(packageVersion);
+            });
+        });
+    return result;
   }
-  getDependenciesIds(subscriberPackageVersionId: string): Promise<string[]> {
-    throw new Error("Method not implemented.");
+  public async getDependenciesIds(subscriberPackageVersionId: string): Promise<string[]> {
+    const result: string[] = [];
+    const query = this.PACKAGE_VERSION_DEPENDENCIES_QUERY
+      .replace('%s', subscriberPackageVersionId);
+    await this.connection.tooling.query<SubscriberPackageVersion>(query)
+        .then(subscriberPackageVersion => {
+            subscriberPackageVersion.records.forEach(packageVersion => {
+                if (packageVersion.Dependencies) {
+                    packageVersion.Dependencies.ids.forEach(id => {
+                        result.push(id.subscriberPackageVersionId);
+                    });
+                }
+            });
+        });
+    return result;
   }
 }
