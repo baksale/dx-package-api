@@ -1,5 +1,7 @@
+import { Connection } from "@salesforce/core";
 import { DxPackageMetadataApi } from "./api";
 import { Package2Version } from "./model";
+import { DxPackageMetadataApiImpl } from "./apimpl";
 
 export interface DxPackageMetadataCachingApi {
   getPackage2VersionById(subscriberPackageVersionId: string): Promise<Package2Version>;
@@ -9,8 +11,11 @@ export interface DxPackageMetadataCachingApi {
 export class DxPackageMetadataCachingApiImpl implements DxPackageMetadataCachingApi {
   private packageVersions: Map<string, Package2Version> = new Map();
   private packageVersionIdToDependenciesIds: Map<string, string[]> = new Map();
+  private dxPackageMetadataApi: DxPackageMetadataApi;
 
-  constructor(private dxPackageMetadataApi: DxPackageMetadataApi) {}
+  constructor(connection: Connection) {
+    this.dxPackageMetadataApi = new DxPackageMetadataApiImpl(connection);
+  }
 
   public async getPackage2VersionById(subscriberPackageVersionId: string): Promise<Package2Version> {
     if (!this.packageVersions.has(subscriberPackageVersionId)) 
