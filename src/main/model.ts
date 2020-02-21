@@ -10,12 +10,12 @@ export interface Dependencies {
   ids: Id[];
 }
 export interface SubscriberPackageVersion {
-//  attributes: Attributes;
+  //  attributes: Attributes;
   Dependencies: Dependencies;
 }
 
 export interface Package2 {
-//  attributes?: Attributes;
+  //  attributes?: Attributes;
   Name: string;
   NamespacePrefix?: string;
 }
@@ -31,11 +31,11 @@ export interface Package2Version {
   Branch: string;
   IsReleased: boolean;
   IsPasswordProtected: boolean;
-//  attributes?: Attributes;
-//  Id?: string;
-//  Package2Id?: string;
-//  Name?: string;
-//  Description?: string;
-//  CreatedDate?: string;
-//  LasteModifiedDate?: string;
+  //  attributes?: Attributes;
+  //  Id?: string;
+  //  Package2Id?: string;
+  //  Name?: string;
+  //  Description?: string;
+  //  CreatedDate?: string;
+  //  LasteModifiedDate?: string;
 }
