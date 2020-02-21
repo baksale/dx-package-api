@@ -6,6 +6,3 @@ Check [api.ts](./src/main/api.ts)
 
 ## Caching api
 Check [cachingapi.ts](./src/main/cachingapi.ts)
-
-# HowTo
-Ensure there is the following dependency in your project: @salesforce/core
