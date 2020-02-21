@@ -26,7 +26,7 @@ export class DxPackageMetadataApiImpl implements DxPackageMetadataApi {
     package2Id: string,
     majorVersion: string,
     minorVersion: string,
-    patchVersion: string,
+    patchVersion: string
   ): Promise<number> {
     let maxBuildVersion: number = -1;
     const query: string = this.MAX_BUILD_NUMBER_QUERY.replace('%i', package2Id)
@@ -45,7 +45,7 @@ export class DxPackageMetadataApiImpl implements DxPackageMetadataApi {
   public async getPackage2VersionById(subscriberPackageVersionId: string): Promise<Package2Version> {
     const query: string = (this.PACKAGE_VERSION_QUERY + this.PACKAGE_VERSION_WHERE_BY_IDS).replace(
       '%s',
-      subscriberPackageVersionId,
+      subscriberPackageVersionId
     );
     let result: Package2Version = null;
     await this.connection.tooling.query<Package2Version>(query).then(packageQueryResult => {
@@ -61,7 +61,7 @@ export class DxPackageMetadataApiImpl implements DxPackageMetadataApi {
     majorVersion: string,
     minorVersion: string,
     patchVersion: string,
-    buildNumber: string,
+    buildNumber: string
   ): Promise<Package2Version> {
     const query: string = (this.PACKAGE_VERSION_QUERY + this.PACKAGE_VERSION_WHERE_BY_VERSION)
       .replace('%i', package2Id)
@@ -83,7 +83,7 @@ export class DxPackageMetadataApiImpl implements DxPackageMetadataApi {
     if (subscriberPackageVersionIds.length === 0) return result;
     const packageWhereClause = this.PACKAGE_VERSION_WHERE_BY_VERSION.replace(
       '%s',
-      subscriberPackageVersionIds.join(','),
+      subscriberPackageVersionIds.join(',')
     );
     const query = this.PACKAGE_VERSION_QUERY + packageWhereClause;
     await this.connection.tooling.query<Package2Version>(query).then(packageQueryResult => {
