@@ -1,10 +1,9 @@
-import { AnyJson } from '@salesforce/ts-types';
 import { Connection } from '@salesforce/core';
+import { AnyJson } from '@salesforce/ts-types';
 import { DxPackageMetadataApi } from './api';
 import { Package2Version, SubscriberPackageVersion } from './model';
 
 export class DxPackageMetadataApiImpl implements DxPackageMetadataApi {
-  constructor(private connection: Connection) {}
 
   private PACKAGE_VERSION_QUERY =
     'SELECT Id, SubscriberPackageVersionId, Package2.Name, Package2.NamespacePrefix' +
@@ -22,12 +21,13 @@ export class DxPackageMetadataApiImpl implements DxPackageMetadataApi {
   private MAX_BUILD_NUMBER_QUERY =
     'SELECT max(buildNumber) latestBuildNumber FROM Package2Version' +
     " WHERE Package2Id='%i' AND MajorVersion=%m AND MinorVersion=%n AND PatchVersion=%p";
+  constructor(private connection: Connection) {}
 
   public async getMaxBuildNumber(
     package2Id: string,
     majorVersion: string,
     minorVersion: string,
-    patchVersion: string,
+    patchVersion: string
   ): Promise<number> {
     let maxBuildVersion: number = -1;
     const query: string = this.MAX_BUILD_NUMBER_QUERY.replace('%i', package2Id)
@@ -46,7 +46,7 @@ export class DxPackageMetadataApiImpl implements DxPackageMetadataApi {
   public async getPackage2VersionById(subscriberPackageVersionId: string): Promise<Package2Version> {
     const query: string = (this.PACKAGE_VERSION_QUERY + this.PACKAGE_VERSION_WHERE_BY_IDS).replace(
       '%s',
-      subscriberPackageVersionId,
+      subscriberPackageVersionId
     );
     let result: Package2Version = null;
     await this.connection.tooling.query<Package2Version>(query).then(packageQueryResult => {
@@ -62,7 +62,7 @@ export class DxPackageMetadataApiImpl implements DxPackageMetadataApi {
     majorVersion: string,
     minorVersion: string,
     patchVersion: string,
-    buildNumber: string,
+    buildNumber: string
   ): Promise<Package2Version> {
     const query: string = (this.PACKAGE_VERSION_QUERY + this.PACKAGE_VERSION_WHERE_BY_VERSION)
       .replace('%i', package2Id)
@@ -83,8 +83,7 @@ export class DxPackageMetadataApiImpl implements DxPackageMetadataApi {
     const result: Package2Version[] = [];
     if (subscriberPackageVersionIds.length === 0) return result;
     const packageWhereClause = this.PACKAGE_VERSION_WHERE_BY_VERSION.replace(
-      '%s',
-      subscriberPackageVersionIds.join(','),
+      '%s', subscriberPackageVersionIds.join(',')
     );
     const query = this.PACKAGE_VERSION_QUERY + packageWhereClause;
     await this.connection.tooling.query<Package2Version>(query).then(packageQueryResult => {
