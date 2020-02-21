@@ -5,7 +5,7 @@ export interface DxPackageMetadataApi {
     package2Id: string,
     majorVersion: string,
     minorVersion: string,
-    patchVersion: string
+    patchVersion: string,
   ): Promise<number>;
 
   getPackage2VersionById(subscriberPackageVersionId: string): Promise<Package2Version>;
@@ -14,7 +14,7 @@ export interface DxPackageMetadataApi {
     majorVersion: string,
     minorVersion: string,
     patchVersion: string,
-    buildNumber: string
+    buildNumber: string,
   ): Promise<Package2Version>;
   getPackage2VersionByIds(subscriberPackageVersionIds: string[]): Promise<Package2Version[]>;
 

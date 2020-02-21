@@ -21,7 +21,7 @@ export class DxPackageMetadataCachingApiImpl implements DxPackageMetadataCaching
     if (!this.packageVersions.has(subscriberPackageVersionId)) {
       this.packageVersions.set(
         subscriberPackageVersionId,
-        await this.dxPackageMetadataApi.getPackage2VersionById(subscriberPackageVersionId)
+        await this.dxPackageMetadataApi.getPackage2VersionById(subscriberPackageVersionId),
       );
     }
     return this.packageVersions.get(subscriberPackageVersionId);
@@ -31,7 +31,7 @@ export class DxPackageMetadataCachingApiImpl implements DxPackageMetadataCaching
     if (!this.packageVersionIdToDependenciesIds.has(subscriberPackageVersionId)) {
       this.packageVersionIdToDependenciesIds.set(
         subscriberPackageVersionId,
-        await this.dxPackageMetadataApi.getDependenciesIds(subscriberPackageVersionId)
+        await this.dxPackageMetadataApi.getDependenciesIds(subscriberPackageVersionId),
       );
     }
     const ids = this.packageVersionIdToDependenciesIds.get(subscriberPackageVersionId);
