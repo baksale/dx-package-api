@@ -1,7 +1,7 @@
 import { Connection } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
+import { Package2Version, SubscriberPackageVersion } from '.';
 import { DxPackageMetadataApi } from './api';
-import { Package2Version, SubscriberPackageVersion } from './model';
 
 export class DxPackageMetadataApiImpl implements DxPackageMetadataApi {
 

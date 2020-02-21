@@ -1,7 +1,7 @@
 import { Connection } from '@salesforce/core';
+import { Package2Version } from '.';
 import { DxPackageMetadataApi } from './api';
 import { DxPackageMetadataApiImpl } from './apimpl';
-import { Package2Version } from './model';
 
 export interface DxPackageMetadataCachingApi {
   getPackage2VersionById(subscriberPackageVersionId: string): Promise<Package2Version>;

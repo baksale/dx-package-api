@@ -21,16 +21,16 @@ export interface Package2 {
 }
 
 export interface Package2Version {
-  Package2: Package2;
-  SubscriberPackageVersionId: string;
-  MajorVersion: number;
-  MinorVersion: number;
-  PatchVersion: number;
-  BuildNumber: number;
-  Tag: string;
-  Branch: string;
-  IsReleased: boolean;
-  IsPasswordProtected: boolean;
+  Package2?: Package2;
+  SubscriberPackageVersionId?: string;
+  MajorVersion?: number;
+  MinorVersion?: number;
+  PatchVersion?: number;
+  BuildNumber?: number;
+  Tag?: string;
+  Branch?: string;
+  IsReleased?: boolean;
+  IsPasswordProtected?: boolean;
   //  attributes?: Attributes;
   //  Id?: string;
   //  Package2Id?: string;
