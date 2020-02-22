@@ -81,10 +81,7 @@ export class DxPackageMetadataApiImpl implements DxPackageMetadataApi {
   public async getPackage2VersionByIds(subscriberPackageVersionIds: string[]): Promise<Package2Version[]> {
     const result: Package2Version[] = [];
     if (subscriberPackageVersionIds.length === 0) return result;
-    const packageWhereClause = this.PACKAGE_VERSION_WHERE_BY_IDS.replace(
-      '%s',
-      subscriberPackageVersionIds.join(',')
-    );
+    const packageWhereClause = this.PACKAGE_VERSION_WHERE_BY_IDS.replace('%s', subscriberPackageVersionIds.join(','));
     const query = this.PACKAGE_VERSION_QUERY + packageWhereClause;
     await this.connection.tooling.query<Package2Version>(query).then(packageQueryResult => {
       packageQueryResult.records.forEach(packageVersion => {
