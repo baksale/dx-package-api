@@ -36,7 +36,7 @@ export class DxPackageMetadataApiImpl implements DxPackageMetadataApi {
     await this.connection.tooling.query<AnyJson>(query).then(maxBuildVersionQueryResult => {
       maxBuildVersionQueryResult.records.some(maxBuildVersionElement => {
         // tslint:disable-next-line: no-string-literal
-        maxBuildVersion = maxBuildVersionElement['latestbuildnumber'];
+        maxBuildVersion = maxBuildVersionElement['latestBuildNumber'];
         return true;
       });
     });
