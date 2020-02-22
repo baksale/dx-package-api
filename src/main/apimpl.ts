@@ -13,7 +13,7 @@ export class DxPackageMetadataApiImpl implements DxPackageMetadataApi {
   private PACKAGE_VERSION_WHERE_BY_IDS = ' where SubscriberPackageVersionId in (%s) ';
 
   private PACKAGE_VERSION_WHERE_BY_VERSION =
-    " WHERE Package2Id='%i' AND MajorVersion=%m AND MinorVersion=%n" + ' AND PatchVersion=%p AND BuildNumber=%b';
+    " WHERE Package2Id='%i' AND MajorVersion=%m AND MinorVersion=%n AND PatchVersion=%p AND BuildNumber=%b";
 
   private PACKAGE_VERSION_DEPENDENCIES_QUERY = "SELECT Dependencies FROM SubscriberPackageVersion WHERE Id = '%s'";
 
@@ -81,7 +81,7 @@ export class DxPackageMetadataApiImpl implements DxPackageMetadataApi {
   public async getPackage2VersionByIds(subscriberPackageVersionIds: string[]): Promise<Package2Version[]> {
     const result: Package2Version[] = [];
     if (subscriberPackageVersionIds.length === 0) return result;
-    const packageWhereClause = this.PACKAGE_VERSION_WHERE_BY_VERSION.replace(
+    const packageWhereClause = this.PACKAGE_VERSION_WHERE_BY_IDS.replace(
       '%s',
       subscriberPackageVersionIds.join(',')
     );
