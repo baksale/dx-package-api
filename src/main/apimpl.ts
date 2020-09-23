@@ -10,7 +10,7 @@ export class DxPackageMetadataApiImpl implements DxPackageMetadataApi {
     ',IsReleased, IsPasswordProtected ' +
     'FROM Package2Version ';
 
-  private PACKAGE_VERSION_WHERE_BY_IDS = ' where SubscriberPackageVersionId in (%s) ';
+  private PACKAGE_VERSION_WHERE_BY_IDS = " where SubscriberPackageVersionId in ('%s') ";
 
   private PACKAGE_VERSION_WHERE_BY_VERSION =
     " WHERE Package2Id='%i' AND MajorVersion=%m AND MinorVersion=%n AND PatchVersion=%p AND BuildNumber=%b";
