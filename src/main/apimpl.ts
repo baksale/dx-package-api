@@ -43,10 +43,12 @@ export class DxPackageMetadataApiImpl implements DxPackageMetadataApi {
     return maxBuildVersion;
   }
   public async getPackage2VersionById(subscriberPackageVersionId: string): Promise<Package2Version> {
+    console.log('input >>> ' + subscriberPackageVersionId);
     const query: string = (this.PACKAGE_VERSION_QUERY + this.PACKAGE_VERSION_WHERE_BY_IDS).replace(
       '%s',
       subscriberPackageVersionId.includes("'") ? subscriberPackageVersionId : "'" + subscriberPackageVersionId + "'"
     );
+    console.log('query >>> ' + query);
     let result: Package2Version = null;
     await this.connection.tooling.query<Package2Version>(query).then(packageQueryResult => {
       packageQueryResult.records.forEach(packageVersion => {
