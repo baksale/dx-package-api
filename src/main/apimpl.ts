@@ -83,7 +83,7 @@ export class DxPackageMetadataApiImpl implements DxPackageMetadataApi {
   public async getPackage2VersionByIds(subscriberPackageVersionIds: string[]): Promise<Package2Version[]> {
     const result: Package2Version[] = [];
     if (subscriberPackageVersionIds.length === 0) return result;
-    const versions: string [] = [];
+    const versions: string[] = [];
     subscriberPackageVersionIds.forEach(version => {
       versions.push("'" + version + "'");
     });
