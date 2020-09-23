@@ -85,6 +85,7 @@ export class DxPackageMetadataApiImpl implements DxPackageMetadataApi {
     if (subscriberPackageVersionIds.length === 0) return result;
     const packageWhereClause = this.PACKAGE_VERSION_WHERE_BY_IDS.replace('%s', subscriberPackageVersionIds.join(','));
     const query = this.PACKAGE_VERSION_QUERY + packageWhereClause;
+    console.log('query2 >>> ' + query);
     await this.connection.tooling.query<Package2Version>(query).then(packageQueryResult => {
       packageQueryResult.records.forEach(packageVersion => {
         result.push(packageVersion);
