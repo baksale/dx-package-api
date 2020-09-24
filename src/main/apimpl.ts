@@ -83,7 +83,10 @@ export class DxPackageMetadataApiImpl implements DxPackageMetadataApi {
     if (subscriberPackageVersionIds.length === 0) return result;
     const versions: string[] = [];
     subscriberPackageVersionIds.forEach(version => {
-      versions.push(version.includes("'") ? version : "'" + version + "'");
+      console.log('incoming version >>> ' + version);
+      const outgoingVersion = version.includes("'") ? version : "'" + version + "'";
+      versions.push(outgoingVersion);
+      console.log('outgoing version >>> ' + outgoingVersion);
     });
     const packageWhereClause = this.PACKAGE_VERSION_WHERE_BY_IDS.replace('%s', versions.join(','));
     const query = this.PACKAGE_VERSION_QUERY + packageWhereClause;
