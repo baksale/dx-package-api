@@ -43,12 +43,10 @@ export class DxPackageMetadataApiImpl implements DxPackageMetadataApi {
     return maxBuildVersion;
   }
   public async getPackage2VersionById(subscriberPackageVersionId: string): Promise<Package2Version> {
-    console.log('input >>> ' + subscriberPackageVersionId);
     const query: string = (this.PACKAGE_VERSION_QUERY + this.PACKAGE_VERSION_WHERE_BY_IDS).replace(
       '%s',
       subscriberPackageVersionId.includes("'") ? subscriberPackageVersionId : "'" + subscriberPackageVersionId + "'"
     );
-    console.log('query >>> ' + query);
     let result: Package2Version = null;
     await this.connection.tooling.query<Package2Version>(query).then(packageQueryResult => {
       packageQueryResult.records.forEach(packageVersion => {
@@ -83,13 +81,8 @@ export class DxPackageMetadataApiImpl implements DxPackageMetadataApi {
   public async getPackage2VersionByIds(subscriberPackageVersionIds: string[]): Promise<Package2Version[]> {
     const result: Package2Version[] = [];
     if (subscriberPackageVersionIds.length === 0) return result;
-    const versions: string[] = [];
-    subscriberPackageVersionIds.forEach(version => {
-      versions.push("'" + version + "'");
-    });
-    const packageWhereClause = this.PACKAGE_VERSION_WHERE_BY_IDS.replace('%s', versions.join(','));
+    const packageWhereClause = this.PACKAGE_VERSION_WHERE_BY_IDS.replace('%s', subscriberPackageVersionIds.join(','));
     const query = this.PACKAGE_VERSION_QUERY + packageWhereClause;
-    console.log('query2 >>> ' + query);
     await this.connection.tooling.query<Package2Version>(query).then(packageQueryResult => {
       packageQueryResult.records.forEach(packageVersion => {
         result.push(packageVersion);
