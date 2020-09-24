@@ -1,6 +1,6 @@
 {
   "name": "dx-package-api",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "description": "API to work with salesforce dx packages metadata",
   "scripts": {
     "test": "jest --config jestconfig.json",
